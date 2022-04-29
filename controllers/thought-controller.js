@@ -113,5 +113,24 @@ const thoughtController = {
         res.status(500).json(err);
       });
   },
-  deleteReaction() {},
+  deleteReaction({ params, body }, res) {
+    Thought.findOneAndUpdate(
+      { _id: params.thoughtId },
+      { $pull: { reactions: { reactionId: body.reactionId } } },
+      { runValidators: true, new: true }
+    )
+      .then((dbThoghtData) => {
+        if (!dbThoughtData) {
+          res.status(404).json({ message: ERR_MSG_THOUGHT_NOT_FOUND });
+          return;
+        }
+        res.json(dbThoughtData);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  },
 };
+
+module.exports=thoughtController;
