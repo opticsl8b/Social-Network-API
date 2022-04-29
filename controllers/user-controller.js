@@ -1,4 +1,5 @@
 const { User, Thought } = require("../models");
+
 const ERR_MSG_NO_USER_FOUND = "No user with this id was found";
 const ERR_MSG_NO_CONNECTION_FOUND = "No friend(user) with this id was found";
 
@@ -104,33 +105,31 @@ const userController = {
       .catch((err) => res.status(500).json(err));
   },
   disconnectWithUser({ params }, res) {
-    userController
-      .findOneAndUpdate(
-        { _id: params.friendId },
-        { $pull: { friends: params.userId } },
-        { runValidators: true, new: true }
-      )
-      .then((dbFriendUserData) => {
-        if (!dbFriendUserData) {
-          res.status(404).json({ message: ERR_MSG_NO_USR_FOUND });
-          return;
-        } else {
-          User.findOneAndUpdate(
-            { _id: params.friendId },
-            { $pull: { friends: params.userId } },
-            { runValidators: true, new: true }
-          )
-            .then((dbUserData) => {
-              if (!dbUserData) {
-                res.status(404).json({ message: ERR_MSG_NO_USR_FOUND });
-                return;
-              }
-              res.json(dbUserData);
-            })
-            .catch((err) => res.status(500).json(err));
-        }
-      });
+    User.findOneAndUpdate(
+      { _id: params.friendId },
+      { $pull: { friends: params.userId } },
+      { runValidators: true, new: true }
+    ).then((dbFriendUserData) => {
+      if (!dbFriendUserData) {
+        res.status(404).json({ message: ERR_MSG_NO_USR_FOUND });
+        return;
+      } else {
+        User.findOneAndUpdate(
+          { _id: params.friendId },
+          { $pull: { friends: params.userId } },
+          { runValidators: true, new: true }
+        )
+          .then((dbUserData) => {
+            if (!dbUserData) {
+              res.status(404).json({ message: ERR_MSG_NO_USR_FOUND });
+              return;
+            }
+            res.json(dbUserData);
+          })
+          .catch((err) => res.status(500).json(err));
+      }
+    });
   },
 };
 
-module.exports=userController;
+module.exports = userController;
