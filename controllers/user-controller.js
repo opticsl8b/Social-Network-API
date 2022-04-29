@@ -51,7 +51,7 @@ const userController = {
     )
       .then((dbUserData) => {
         if (!dbUserData) {
-          res.status(404).json({ message: ERR_MSG_NO_USR_FOUND });
+          res.status(404).json({ message: ERR_MSG_NO_USER_FOUND });
           return;
         }
         res.json(dbUserData);
@@ -62,14 +62,14 @@ const userController = {
     User.findOneAndDelete({ _id: params.id })
       .then((dbUserData) => {
         if (!dbUserData) {
-          res.status(404).json({ message: ERR_MSG_NO_USR_FOUND });
+          res.status(404).json({ message: ERR_MSG_NO_USER_FOUND });
           return;
         } else {
           Thought.deleteMany({
             username: dbUserData.username,
           }).then((dbThoughtData) => {
-            if (dbThoughtData) {
-              res(404).json("User deleted but no associated thought was found");
+            if (!dbThoughtData) {
+              res.status(404).json("User deleted but no associated thought was found");
               return;
             }
           });
@@ -95,7 +95,7 @@ const userController = {
             { runValidators: true, new: true }
           ).then((dbUserData) => {
             if (!dbUserData) {
-              res.status(404).json({ message: ERR_MSG_NO_USR_FOUND });
+              res.status(404).json({ message: ERR_MSG_NO_USER_FOUND });
               return;
             }
             res.json(dbUserData);
@@ -111,7 +111,7 @@ const userController = {
       { runValidators: true, new: true }
     ).then((dbFriendUserData) => {
       if (!dbFriendUserData) {
-        res.status(404).json({ message: ERR_MSG_NO_USR_FOUND });
+        res.status(404).json({ message: ERR_MSG_NO_USER_FOUND });
         return;
       } else {
         User.findOneAndUpdate(
@@ -121,7 +121,7 @@ const userController = {
         )
           .then((dbUserData) => {
             if (!dbUserData) {
-              res.status(404).json({ message: ERR_MSG_NO_USR_FOUND });
+              res.status(404).json({ message: ERR_MSG_NO_USER_FOUND });
               return;
             }
             res.json(dbUserData);

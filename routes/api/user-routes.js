@@ -11,7 +11,7 @@ const{
 }=require("../../controllers/user-controller")
 
 // REST
-router.route("/").get(getAllUsers).post(createUser);
+router.route("/").get(getAllusers).post(createUser);
 
 router.route("/:id").get(getUserById).put(updateUser).delete(deleteUser);
 
