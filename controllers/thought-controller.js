@@ -8,7 +8,7 @@ const thoughtController = {
     Thought.find({})
       .select("-__v")
       .then((dbThoughtData) => res.json(dbThoughtData))
-      .catch(() => {
+      .catch((err) => {
         console.log(err);
         res.status(500).json(err);
       });
@@ -41,9 +41,9 @@ const thoughtController = {
           { new: true }
         )
           .select("-__v")
-          .then((dbUserData) => {
+          .then((dbUserdata) => {
             if (!dbUserdata) {
-              res.status(404).json({ message: "Nouser found with this id!" });
+              res.status(404).json({ message: "No user found with this id!" });
               return;
             }
           });

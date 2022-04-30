@@ -80,6 +80,8 @@ if(hour===0){
     hour=12
 }
 
+const minutes = dateObj.getMinutes();
+
 let ampm;
 
 if(dateObj.getHours()>=12){

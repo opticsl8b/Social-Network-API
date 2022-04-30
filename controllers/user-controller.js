@@ -81,7 +81,7 @@ const userController = {
   connectWithUser({ params }, res) {
     User.findOneAndUpdate(
       { _id: params.friendId },
-      { $addToSet: { friends: params.UserId } },
+      { $addToSet: { friends: params.userId } },
       { runValidators: true, new: true }
     )
       .then((dbFriendUserData) => {
@@ -90,8 +90,8 @@ const userController = {
           return;
         } else {
           User.findOneAndUpdate(
-            { _id: params.friendId },
-            { $addToSet: { friends: params.UserId } },
+            { _id: params.userId },
+            { $addToSet: { friends: params.friendId } },
             { runValidators: true, new: true }
           ).then((dbUserData) => {
             if (!dbUserData) {

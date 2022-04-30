@@ -41,7 +41,7 @@ const ThoughtSchema = new Schema(
       required: "reactionBody is a required field",
       validate: [
         ({ length }) => length <= 280,
-        "reactionBody should be 280 max",
+        "thoughtText should be 280 max",
       ],
     },
     createAt: {
@@ -64,9 +64,9 @@ const ThoughtSchema = new Schema(
   }
 );
 
-ThoughtSchema.virtual("reactionCount").get(()=>{
-return this.reactions.length;
-})
+ThoughtSchema.virtual("reactionCount").get(function () {
+  return this.reactions.length;
+});
 
 const Thought =model("Thought", ThoughtSchema);
 
