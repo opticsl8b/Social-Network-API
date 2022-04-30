@@ -119,7 +119,7 @@ const thoughtController = {
       { $pull: { reactions: { reactionId: body.reactionId } } },
       { runValidators: true, new: true }
     )
-      .then((dbThoghtData) => {
+      .then((dbThoughtData) => {
         if (!dbThoughtData) {
           res.status(404).json({ message: ERR_MSG_THOUGHT_NOT_FOUND });
           return;
