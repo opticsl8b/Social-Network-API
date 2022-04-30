@@ -90,7 +90,7 @@ if(dateObj.getHours()>=12){
     ampm='am'
 }
 
-const formattedTime=`${formattedMonth}${dayofMonth},${year} at ${hour}:${minutes}${ampm}`;
+const formattedTime=`${formattedMonth} ${dayofMonth},${year} at ${hour}:${minutes}${ampm}`;
 
 return formattedTime;
 
